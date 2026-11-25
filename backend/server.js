@@ -3,21 +3,26 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
+const normalizeOrigin = (val = '') => val.trim().replace(/\/+$/, '');
+
 const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:4200')
   .split(',')
-  .map((o) => o.trim())
+  .map(normalizeOrigin)
   .filter(Boolean);
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      const incoming = normalizeOrigin(origin || '');
+      if (!origin || allowedOrigins.includes(incoming)) {
         return callback(null, true);
       }
-      return callback(new Error('Not allowed by CORS'));
+      console.warn('Blocked CORS origin:', origin, 'Allowed:', allowedOrigins);
+      return callback(null, false);
     },
   })
 );
+
 app.use(express.json());
 app.use('/uploads', express.static(require('path').join(__dirname, 'uploads')));
 
