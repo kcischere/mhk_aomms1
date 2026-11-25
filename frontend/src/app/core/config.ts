@@ -1,6 +1,6 @@
-// Address of the Node.js backend. Change these if your backend uses another port.
-export const API = 'http://localhost:3000/api';
-export const FILES = 'http://localhost:3000';
+
+export const API = 'https://mhk-aomms1.onrender.com/api';
+export const FILES = 'https://mhk-aomms1.onrender.com';
 
 // Photo links saved by the upload feature start with /uploads; point them at the backend.
 export const img = (u?: string | null): string => (!u ? '' : u.startsWith('/uploads') ? FILES + u : u);

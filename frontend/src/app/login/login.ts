@@ -33,7 +33,7 @@ export class LoginComponent {
       password: this.password
     };
 
-    this.http.post<any>('http://localhost:3000/api/auth/login', payload).subscribe({
+    this.http.post<any>('https://mhk-aomms1.onrender.com/api/auth/login', payload).subscribe({
       next: (res) => {
         this.isSuccess = true;
         this.message = 'Login successful!';
