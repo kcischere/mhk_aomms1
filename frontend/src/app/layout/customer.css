@@ -1,0 +1,60 @@
+/* Customer-side styles. Used together with staff.css (it reuses the same colors and base classes). */
+/* ---------- customer side ---------- */
+.app-staff .pill.green { background: var(--green-soft); color: var(--green); }
+.app-staff .back { display: inline-block; color: var(--muted); text-decoration: none; font-size: .88rem; margin-bottom: 1rem; }
+.app-staff .cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
+.app-staff .dish { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.app-staff .dish .pic { display: grid; place-items: center; height: 170px; width: 100%; object-fit: cover; background: var(--sand); color: var(--muted); font-size: .8rem; }
+.app-staff .dish .body { padding: 1rem; display: flex; flex-direction: column; gap: .45rem; flex: 1; }
+.app-staff .dish h3 { font-size: 1rem; margin: 0; }
+.app-staff .dish a { color: inherit; text-decoration: none; }
+.app-staff .dish .btn { margin-top: auto; }
+.app-staff .rate { color: #a86a0e; font-size: .82rem; }
+.app-staff .price { font-weight: 800; font-size: 1.15rem; }
+.app-staff .stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+.app-staff .stepper button { background: none; border: 0; width: 32px; height: 34px; font-size: 1.1rem; color: var(--accent); cursor: pointer; }
+.app-staff .stepper button:disabled { color: #c9c0b5; cursor: not-allowed; }
+.app-staff .stepper span { min-width: 28px; text-align: center; font-weight: 700; }
+.app-staff .item-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2rem; margin: 1rem 0 2.2rem; }
+.app-staff .item-hero img, .app-staff .item-hero .pic { display: grid; place-items: center; width: 100%; height: 370px; object-fit: cover; border-radius: 12px; background: var(--sand); color: var(--muted); }
+.app-staff .item-hero h1 { font-size: 2.2rem; margin: .8rem 0 .4rem; }
+.app-staff .reviews3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.app-staff .rcard { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem; }
+.app-staff .rcard .head { display: flex; justify-content: space-between; gap: .5rem; }
+.app-staff .cart-line { display: flex; align-items: center; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid var(--line); }
+.app-staff .cart-line:last-child { border-bottom: 0; }
+.app-staff .cart-line .info { flex: 1; }
+.app-staff .cart-line .info b { display: block; }
+.app-staff .cart-line .info small { color: var(--muted); }
+.app-staff .twocol { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 1.1rem; align-items: start; }
+.app-staff .stack { display: grid; gap: 1.1rem; }
+.app-staff .steps { display: flex; gap: .6rem; flex-wrap: wrap; }
+.app-staff .step { display: flex; align-items: center; gap: .7rem; flex: 1; min-width: 160px; }
+.app-staff .step .num { width: 34px; height: 34px; border-radius: 50%; background: var(--sand); display: grid; place-items: center; font-weight: 700; color: var(--muted); flex: none; }
+.app-staff .step.on .num { background: var(--accent); color: #fff; }
+.app-staff .step.done .num { background: var(--green); color: #fff; }
+.app-staff .step b { display: block; font-size: .9rem; }
+.app-staff .step small { color: var(--muted); font-size: .76rem; }
+.app-staff .step.on b { color: var(--accent); }
+.app-staff .hist { display: grid; grid-template-columns: 1fr 1.6fr .8fr auto; gap: 1rem; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.app-staff .hist:last-child { border-bottom: 0; }
+.app-staff .hist small { color: var(--muted); display: block; }
+.app-staff .hist .right { text-align: right; display: grid; gap: .2rem; justify-items: end; }
+.app-staff .dark { background: #352b25; color: #fff; border-radius: 16px; padding: 1.4rem; }
+.app-staff .dark .eyebrow { color: #e9d9cc; letter-spacing: .05em; text-transform: uppercase; }
+.app-staff .dark .bigpts { font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: .5rem 0; }
+.app-staff .dark small { color: #d8c8bb; }
+.app-staff .progress { height: 6px; border-radius: 99px; background: #5a4b42; overflow: hidden; margin: .8rem 0; }
+.app-staff .progress i { display: block; height: 100%; background: var(--accent); }
+.app-staff .vcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+.app-staff .vcard .val { color: var(--accent); font-size: 1.5rem; font-weight: 800; }
+.app-staff .vcard .row2 { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.app-staff .how { list-style: none; padding: 0; margin: 0; display: grid; gap: .9rem; }
+.app-staff .how li { display: grid; grid-template-columns: 2rem 1fr; gap: .5rem; }
+.app-staff .how li > b { color: var(--accent); }
+.app-staff .how p { color: var(--muted); font-size: .86rem; }
+.app-staff .starpick { display: flex; gap: .3rem; }
+.app-staff .starpick button { background: none; border: 0; font-size: 2rem; color: var(--accent); cursor: pointer; line-height: 1; padding: 0; }
+.app-staff .avatar-lg { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 1.3rem; font-weight: 800; flex: none; }
+.app-staff .profile-head { display: flex; align-items: center; gap: 1rem; }
+@media (max-width: 1000px) { .app-staff .twocol, .app-staff .item-hero { grid-template-columns: 1fr; } .app-staff .hist { grid-template-columns: 1fr; } .app-staff .hist .right { text-align: left; justify-items: start; } }

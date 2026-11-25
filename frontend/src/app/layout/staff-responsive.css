@@ -1,0 +1,229 @@
+/* =====================================================================
+   Admin + cashier area: full-width layout, phone menu, glassmorphism.
+   Loaded after staff.css, so these rules win.
+   ===================================================================== */
+
+/* ---------- Full width: every wrapper fills the screen ---------- */
+body:has(app-shell) { display: block; }
+app-root:has(> app-shell) { display: block; width: 100%; }
+app-shell { display: block; width: 100%; min-width: 0; }
+
+.app-staff { width: 100%; overflow-x: clip; }
+.app-staff .shell { width: 100%; grid-template-columns: 240px minmax(0, 1fr); }
+.app-staff .content { width: 100%; min-width: 0; }
+
+.app-staff main {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 3vw, 2.5rem);
+}
+.app-staff .topbar,
+.app-staff footer {
+  padding-left: clamp(1rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 3vw, 2.5rem);
+}
+
+/* Wide tables scroll sideways instead of being cut off */
+.app-staff .table-wrap { overflow-x: auto; }
+.app-staff .table-wrap table { min-width: 640px; }
+
+/* Phone menu button and backdrop (hidden on desktop) */
+.app-staff .menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-right: .6rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: var(--glass-strong);
+  color: var(--ink);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.app-staff .scrim { display: none; }
+
+/* ---------- Glassmorphism ---------- */
+.app-staff {
+  --glass: rgba(255, 255, 255, .52);
+  --glass-strong: rgba(255, 255, 255, .72);
+  --glass-soft: rgba(255, 255, 255, .34);
+  --glass-border: rgba(255, 255, 255, .7);
+  --glass-shadow: 0 8px 32px rgba(120, 60, 30, .12);
+  --blur: blur(18px) saturate(160%);
+
+  /* soft colour glows behind the glass */
+  background:
+    radial-gradient(900px 600px at 6% 10%, rgba(240, 130, 80, .38), transparent 60%),
+    radial-gradient(800px 600px at 94% 6%, rgba(255, 200, 125, .45), transparent 60%),
+    radial-gradient(900px 700px at 88% 96%, rgba(185, 78, 39, .30), transparent 60%),
+    radial-gradient(700px 500px at 10% 92%, rgba(110, 175, 165, .32), transparent 60%),
+    linear-gradient(135deg, #fcefe4 0%, #f8e4d7 45%, #f4ddd0 100%);
+  background-attachment: fixed;
+}
+
+/* Sidebar */
+.app-staff .side {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: 4px 0 30px rgba(120, 60, 30, .08);
+}
+.app-staff nav a { transition: background .18s ease, color .18s ease, transform .18s ease; }
+.app-staff nav a:hover { background: rgba(255, 255, 255, .6); }
+.app-staff nav a.active {
+  background: rgba(185, 78, 39, .14);
+  box-shadow: inset 0 0 0 1px rgba(185, 78, 39, .22), 0 4px 14px rgba(185, 78, 39, .10);
+}
+.app-staff .side-note,
+.app-staff .me {
+  background: var(--glass-soft);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.app-staff .me { margin-top: .8rem; }
+
+/* Top bar (stays visible while scrolling) */
+.app-staff .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.app-staff .pill { background: rgba(185, 78, 39, .12); color: var(--accent); }
+.app-staff footer { color: var(--muted); }
+
+/* Cards and panels */
+.app-staff .panel,
+.app-staff .card,
+.app-staff .stat,
+.app-staff .review,
+.app-staff .note {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, .8);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+}
+.app-staff .stat { transition: transform .18s ease, box-shadow .18s ease; }
+.app-staff .stat:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(120, 60, 30, .16), inset 0 1px 0 rgba(255, 255, 255, .8); }
+
+/* Tables inside panels */
+.app-staff th { background: rgba(255, 255, 255, .45); }
+.app-staff td { border-bottom-color: rgba(120, 90, 70, .12); }
+.app-staff tr:hover td { background: rgba(255, 255, 255, .35); }
+
+/* Order list rows */
+.app-staff .orow { background: var(--glass-soft); border-color: rgba(255, 255, 255, .5); }
+.app-staff .orow:hover { background: rgba(255, 255, 255, .6); }
+.app-staff .orow.sel { background: rgba(185, 78, 39, .13); border-color: rgba(185, 78, 39, .3); }
+
+/* Inputs */
+.app-staff input,
+.app-staff select,
+.app-staff textarea {
+  background: rgba(255, 255, 255, .62);
+  border-color: rgba(255, 255, 255, .85);
+  box-shadow: inset 0 1px 2px rgba(120, 60, 30, .06);
+}
+.app-staff input:focus,
+.app-staff select:focus,
+.app-staff textarea:focus {
+  background: rgba(255, 255, 255, .85);
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(185, 78, 39, .18);
+}
+
+/* Buttons */
+.app-staff .btn:not(.ghost):not(.danger) {
+  background: linear-gradient(135deg, #cb5a2d, #a8431f);
+  border-color: rgba(255, 255, 255, .35);
+  box-shadow: 0 6px 16px rgba(185, 78, 39, .28);
+}
+.app-staff .btn:not(.ghost):not(.danger):hover {
+  background: linear-gradient(135deg, #d8653a, #b34a24);
+}
+.app-staff .btn.ghost {
+  background: var(--glass-strong);
+  border-color: var(--glass-border);
+}
+.app-staff .btn.ghost:hover { background: rgba(255, 255, 255, .9); }
+
+/* Tabs and chips */
+.app-staff .tab { background: var(--glass); border-color: var(--glass-border); }
+.app-staff .tab.on { background: rgba(185, 78, 39, .14); border-color: rgba(185, 78, 39, .4); }
+.app-staff .chip { background: rgba(255, 255, 255, .6); }
+
+/* Popups (vouchers, users) */
+.app-staff .overlay {
+  background: rgba(42, 36, 32, .35);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.app-staff .modal {
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 24px 70px rgba(60, 30, 15, .30);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+}
+
+/* Cashier counter page (its own styles are scoped, so we out-rank them) */
+.app-staff .counter.counter { background: transparent; padding: 0; }
+.app-staff .counter .card.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, .8);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+}
+.app-staff .counter .pay.pay,
+.app-staff .counter .notes.notes { background: var(--glass-soft); }
+.app-staff .counter .tabs button { background: var(--glass); border-color: var(--glass-border); }
+.app-staff .counter .tabs button.on { background: rgba(185, 78, 39, .85); color: #fff; border-color: transparent; }
+
+/* Browsers without backdrop-filter get more solid panels */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .app-staff .side, .app-staff .topbar, .app-staff .panel, .app-staff .card,
+  .app-staff .stat, .app-staff .review, .app-staff .modal { background: rgba(255, 255, 255, .92); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .app-staff .shell { grid-template-columns: 210px minmax(0, 1fr); }
+}
+
+/* Tablets and phones: sidebar becomes a slide-in menu */
+@media (max-width: 900px) {
+  .app-staff .shell { grid-template-columns: minmax(0, 1fr); }
+  .app-staff .side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    height: 100vh;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+    background: var(--glass-strong);
+  }
+  .app-staff .shell.open .side { transform: translateX(0); box-shadow: 8px 0 30px rgba(0, 0, 0, .18); }
+  .app-staff .shell.open .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 36, 32, .45);
+    z-index: 30;
+  }
+  .app-staff .menu-btn { display: inline-flex; }
+  .app-staff main { padding: 1.2rem 1rem; }
+  .app-staff .page-head { flex-direction: column; align-items: stretch; }
+}

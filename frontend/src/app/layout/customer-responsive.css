@@ -1,0 +1,43 @@
+/* ============================================================
+   Customer side: full width + responsive (laptops, tablets, phones)
+   ============================================================ */
+
+/* Fill the whole window (same approach as the admin shell) */
+body:has(app-customer-shell) { display: block; }
+app-root:has(> app-customer-shell) { display: block; width: 100%; min-width: 0; }
+app-customer-shell { display: block; width: 100%; min-width: 0; flex: 1 1 100%; }
+
+.app-staff .crumb { display: flex; align-items: center; min-width: 0; }
+.app-staff img { max-width: 100%; }
+.app-staff .filters { flex-wrap: wrap; }
+.app-staff .dish h3,
+.app-staff .cart-line .info b { overflow-wrap: anywhere; }
+
+/* Tablets (the sidebar becomes a slide-out menu from staff.css at 900px) */
+@media (max-width: 900px) {
+  .app-staff .topbar { padding-top: .7rem; padding-bottom: .7rem; }
+  .app-staff .item-hero img,
+  .app-staff .item-hero .pic { height: 300px; }
+  .app-staff footer { flex-direction: column; gap: .25rem; }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .app-staff h1 { font-size: 1.55rem; }
+  .app-staff .topbar { gap: .6rem; }
+  /* hide the date text and the pill, keep the Cart button */
+  .app-staff .topbar .right { font-size: 0; gap: .4rem; }
+  .app-staff .topbar .right .pill { display: none; }
+  .app-staff .item-hero h1 { font-size: 1.6rem; }
+  .app-staff .item-hero img,
+  .app-staff .item-hero .pic { height: 230px; }
+  .app-staff .cart-line { flex-wrap: wrap; }
+  .app-staff .cart-line .info { flex: 1 1 60%; min-width: 0; }
+  .app-staff .step { flex: 1 1 100%; min-width: 0; }
+  .app-staff .dark { padding: 1.1rem; }
+  .app-staff .dark .bigpts { font-size: 2.4rem; }
+  .app-staff .rcard,
+  .app-staff .vcard { padding: .9rem; }
+  .app-staff .profile-head { flex-wrap: wrap; }
+}
+.app-staff .topbar .btn { white-space: nowrap; }

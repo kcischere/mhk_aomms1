@@ -1,0 +1,40 @@
+<div class="hero-panel">
+    <div class="hero-logo">
+        <span>🍳</span> mr. hungry <small style="font-weight:normal; opacity:0.8;">KITCHEN</small>
+    </div>
+    <div class="hero-content">
+        <p>Your neighborhood favorite</p>
+        <h1>Good food,<br>Great moments,<br>Happy memories!</h1>
+    </div>
+    <div class="hero-footer">
+        COOKED WITH CARE • MR. HUNGRY KITCHEN
+    </div>
+</div>
+
+<div class="form-panel">
+    <div class="form-container">
+        <h2>Welcome back, ka-hungry.</h2>
+        <div class="subtitle">Log in for good food, your next order and little rewards.</div>
+        
+        <form (ngSubmit)="onLogin()">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" [(ngModel)]="email" name="email" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" [(ngModel)]="password" name="password" required placeholder="••••••••••••">
+            </div>
+            <button type="submit" class="btn-submit">→ Log in</button>
+        </form>
+
+        <div id="message" [style.color]="isSuccess ? 'green' : 'red'" *ngIf="message">
+            {{ message }}
+        </div>
+
+        <div class="links-section">
+            <div>New to the kitchen? <a routerLink="/register">Create an account</a></div>
+            <div style="margin-top: 8px; font-size: 12px; color: #888;">Ordering ahead for pickup or dine-in. Pay when you arrive — no online payment needed.</div>
+        </div>
+    </div>
+</div>

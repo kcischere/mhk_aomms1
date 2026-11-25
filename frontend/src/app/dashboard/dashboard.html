@@ -1,0 +1,219 @@
+<div class="app-layout">
+  <!-- Left Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h2>mr. hungry</h2>
+      <span>KITCHEN</span>
+    </div>
+
+    <div class="sidebar-subtitle">YOUR KITCHEN, ONLINE</div>
+
+    <nav class="sidebar-nav">
+      <a [class.active]="activeNav === 'menu'" (click)="activeNav = 'menu'">
+        <span class="icon">🍽️</span> Browse menu
+      </a>
+      <a [class.active]="activeNav === 'orders'" (click)="activeNav = 'orders'">
+        <span class="icon">📦</span> My orders
+      </a>
+      <a [class.active]="activeNav === 'rewards'" (click)="activeNav = 'rewards'">
+        <span class="icon">🎁</span> Rewards & vouchers
+      </a>
+      <a [class.active]="activeNav === 'reviews'" (click)="activeNav = 'reviews'">
+        <span class="icon">⭐</span> My reviews
+      </a>
+      <a [class.active]="activeNav === 'account'" (click)="activeNav = 'account'">
+        <span class="icon">👤</span> My account
+      </a>
+    </nav>
+
+    <div class="sidebar-footer" *ngIf="user">
+      <p class="footer-note"><strong>Made here. Enjoyed here.</strong></p>
+      <p class="footer-time">Pickup & dine-in pre-orders<br>Daily · 10:00 AM – 8:00 PM</p>
+      <hr />
+      <div class="user-profile-card" (click)="logout()" title="Click to logout">
+        <div class="avatar">👤</div>
+        <div>
+          <strong>{{ user.name }}</strong>
+          <small>{{ user.role || 'Customer' | titlecase }}</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Top Header bar -->
+    <header class="top-header">
+      <span class="breadcrumb">MR. HUNGRY KITCHEN / <strong>Browse menu</strong></span>
+      <div class="top-right-widgets">
+        <div class="type-pill">Pickup & dine-in</div>
+        <span class="current-date">{{ currentDate }}</span>
+      </div>
+    </header>
+
+    <!-- Greeting Section -->
+    <div class="greeting-section">
+      <div>
+        <h1>Kumusta, {{ user?.name || 'Guest' }}. What sounds good?</h1>
+        <p>Freshly cooked favorites, ready when you are.</p>
+      </div>
+      <button class="btn-my-orders" (click)="activeNav = 'orders'">My orders</button>
+    </div>
+
+    <!-- Promo Banner Card -->
+    <div class="promo-banner">
+      <div class="promo-text">
+        <span class="tag-small">YOUR NEXT GOOD MEAL STARTS HERE.</span>
+        <h2>Home-style flavors.<br>On your schedule.</h2>
+        <p>Order ahead for pickup or dine-in, then pay at the kitchen.<br>Open today · 10:00 AM – 8:00 PM</p>
+      </div>
+      <div class="promo-image-placeholder">
+        🍲
+      </div>
+    </div>
+
+    <!-- Dynamic Active Order & Points Status Bar -->
+    <div class="status-widgets-bar">
+      <div class="widget-box" *ngIf="activeOrder; else noActiveOrder">
+        <div class="widget-info">
+          <span class="label">Your order #MHK-{{ activeOrder.id }}</span>
+          <span class="sub">Today, {{ activeOrder.time }} · {{ activeOrder.type }} · ₱{{ activeOrder.total | number:'1.2-2' }}</span>
+        </div>
+        <div class="widget-action">
+          <span class="badge-pending">{{ activeOrder.status }}</span>
+          <button class="link-btn" (click)="activeNav = 'orders'">View order →</button>
+        </div>
+      </div>
+
+      <ng-template #noActiveOrder>
+        <div class="widget-box">
+          <div class="widget-info">
+            <span class="label">No active orders</span>
+            <span class="sub">Select items below to place an advance order</span>
+          </div>
+          <button class="link-btn" (click)="activeNav = 'orders'">Order history →</button>
+        </div>
+      </ng-template>
+
+      <div class="widget-box points-box">
+        <div class="widget-info">
+          <span class="label"><strong>{{ userPoints }}</strong> hungry points</span>
+          <span class="sub">100 points = ₱50 voucher</span>
+        </div>
+        <button class="link-btn accent" (click)="activeNav = 'rewards'">Rewards →</button>
+      </div>
+    </div>
+
+    <div class="divider-text">Mr. Hungry Kitchen · A little advance, a lot of sarap. <span class="version-tag">MHK-AOMMS</span></div>
+
+    <!-- Search & Filter Bar -->
+    <div class="filter-toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search menu by words..." />
+      </div>
+      <select class="availability-select" [(ngModel)]="availabilityFilter">
+        <option value="all">All availability</option>
+        <option value="available">Available only</option>
+      </select>
+    </div>
+
+    <!-- Category Pills -->
+    <div class="category-pills">
+      <button *ngFor="let cat of categories" 
+              [class.active]="selectedCategory === cat" 
+              (click)="selectedCategory = cat">
+        {{ cat }}
+      </button>
+    </div>
+
+    <!-- Menu Grid & Cart Container -->
+    <div class="content-split-grid">
+      <!-- Left: Menu Items Grid -->
+      <section class="menu-items-grid">
+        <div class="menu-card" *ngFor="let item of filteredMenuItems()">
+          <div class="card-image-box">
+            <img *ngIf="item.image_url; else defaultEmoji" [src]="item.image_url" [alt]="item.name" style="width: 100%; height: 100%; object-fit: cover;" />
+            <ng-template #defaultEmoji>🍽️</ng-template>
+          </div>
+          <div class="card-body">
+            <div class="card-top-row">
+              <span class="item-cat">{{ item.category }}</span>
+              <span class="rating" *ngIf="item.rating">⭐ {{ item.rating }} ({{ item.reviews_count || 0 }})</span>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p class="item-desc">{{ item.description }}</p>
+            
+            <div class="card-bottom-row">
+              <span class="item-price">₱{{ item.price }}</span>
+              <span class="stock-status" [class.unavailable]="item.status === 'unavailable'">
+                ● {{ item.status }}
+              </span>
+            </div>
+
+            <button class="btn-add-cart" 
+                    [disabled]="item.status === 'unavailable'"
+                    (click)="addToCart(item)">
+              {{ item.status === 'unavailable' ? 'Unavailable' : '+ Add to cart' }}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Sticky Cart Sidebar -->
+      <aside class="cart-sidebar">
+        <h3>Your cart</h3>
+        <div class="cart-badge-pill" *ngIf="getTotalItemsCount() > 0">
+          {{ getTotalItemsCount() }} items · {{ orderType === 'pick-up' ? 'Pickup' : 'Dine-in' }}
+        </div>
+
+        <div class="empty-cart-text" *ngIf="cart.length === 0">
+          Your cart is empty. Pick items from the menu to start your advance order!
+        </div>
+
+        <div class="cart-items-list" *ngIf="cart.length > 0">
+          <div class="cart-row-item" *ngFor="let item of cart">
+            <div class="cart-item-name">
+              <strong>{{ item.name }}</strong>
+              <span class="cart-item-price">₱{{ item.price }}</span>
+            </div>
+            <div class="cart-qty-controls">
+              <button (click)="removeFromCart(item.item_id)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="addToCart(item)">+</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="order-type-selector">
+            <label>Fulfillment Type</label>
+            <select [(ngModel)]="orderType">
+              <option value="pick-up">Pickup</option>
+              <option value="dine-in">Dine-in</option>
+            </select>
+
+            <label>Pickup / Arrival Time</label>
+            <input type="time" [(ngModel)]="pickupTime" />
+          </div>
+
+          <div class="cart-subtotal-row">
+            <span>Subtotal</span>
+            <strong>₱{{ getTotalAmount() }}</strong>
+          </div>
+
+          <button class="btn-go-checkout" (click)="placeAdvanceOrder()">
+            Go to checkout →
+          </button>
+        </div>
+
+        <div class="feedback-banner success" *ngIf="orderMessage && isOrderSuccess">
+          ✅ {{ orderMessage }}
+        </div>
+        <div class="feedback-banner error" *ngIf="orderMessage && !isOrderSuccess">
+          ⚠️ {{ orderMessage }}
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
